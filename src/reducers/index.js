@@ -16,11 +16,11 @@ const initialState = {
 };
 
 export const carReducer = (state = initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case "ADD_FEATURE":
       return {
         ...state,
+
         car: { ...state.car, features: [...state.car.features, action.payload] }
       };
     case "REMOVE_FEATURE":
@@ -33,7 +33,6 @@ export const carReducer = (state = initialState, action) => {
         }
       }
       state.car.features.splice(featureToRemvoe, 1);
-      // console.log(newFeatures);
       return {
         ...state,
         car: {
@@ -41,6 +40,24 @@ export const carReducer = (state = initialState, action) => {
           features: state.car.features
         }
       };
+    case "ADD_TOTAL":
+      return {
+        ...state,
+        additionalPrice: (state.additionalPrice += action.payload)
+      };
+    case "SUB_TOTAL":
+      let newAdditionalPrice = state.additionalPrice - action.payload;
+      if (newAdditionalPrice <= 0) {
+        return {
+          ...state,
+          additionalPrice: 0
+        };
+      } else {
+        return {
+          ...state,
+          additionalPrice: newAdditionalPrice
+        };
+      }
     default:
       return state;
   }

@@ -23,6 +23,24 @@ export const carReducer = (state = initialState, action) => {
         ...state,
         car: { ...state.car, features: [...state.car.features, action.payload] }
       };
+    case "REMOVE_FEATURE":
+      let featureToRemvoe = 0;
+      for (let i = 0; i < [...state.car.features].length; i++) {
+        if (action.payload === [...state.car.features][i]) {
+          featureToRemvoe = [...state.car.features].indexOf(
+            [...state.car.features][i]
+          );
+        }
+      }
+      state.car.features.splice(featureToRemvoe, 1);
+      // console.log(newFeatures);
+      return {
+        ...state,
+        car: {
+          ...state.car,
+          features: state.car.features
+        }
+      };
     default:
       return state;
   }
